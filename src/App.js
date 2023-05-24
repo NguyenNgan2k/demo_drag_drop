@@ -23,16 +23,16 @@ function App() {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {arrItems.map(({ id, content }, index) => {
+              {arrItems.map((item, index) => {
                 return (
-                  <Draggable key={id} draggableId={id} index={index}>
+                  <Draggable
+                    key={item?.id}
+                    draggableId={item?.id}
+                    index={index}
+                  >
                     {(provided) => {
-                      <li
-                        innerRef={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        <p>{content}</p>
+                      <li innerRef={provided.innerRef} provided={provided}>
+                        <p>{item?.content}</p>
                       </li>;
                     }}
                   </Draggable>
