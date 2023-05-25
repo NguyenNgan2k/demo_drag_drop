@@ -17,10 +17,10 @@ function App() {
 
   const addItemToSection = (item) => {
     console.log(item);
-    setListDrop((o) => [...o, item]);
     let obj = [...listBox];
     let find = _.remove(obj, (o) => o.id === item.id);
     setListBox(obj);
+    setListDrop((o) => [...o, item]);
   };
 
   return (
