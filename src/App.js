@@ -1,48 +1,40 @@
 import "./App.css";
-import React, { useState } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import React, { useCallback, useState } from "react";
+import DropZone from "./DropZone";
+import Box from "./Box";
+import * as _ from "lodash";
 
-const arrItems = [
-  { id: "1", content: "First task" },
-  { id: "2", content: "Second task" },
-  { id: "3", content: "Third task" },
-  { id: "4", content: "Fourth task" },
-  { id: "5", content: "Fifth task" },
+const arr = [
+  { id: 1, name: "box1" },
+  { id: 2, name: "box2" },
+  { id: 3, name: "box3" },
 ];
 
 function App() {
-  const [characters, updateCharacters] = useState(arrItems);
-  function handleOnDragEnd(result) {}
+  const [listBox, setListBox] = useState(arr);
+  const [listDrop, setListDrop] = useState([]);
+  console.log(listBox, listDrop);
+
+  const addItemToSection = (item) => {
+    console.log(item);
+    setListDrop((o) => [...o, item]);
+    let obj = [...listBox];
+    let find = _.remove(obj, (o) => o.id === item.id);
+    setListBox(obj);
+  };
+
   return (
     <div className="App">
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="characters">
-          {(provided) => (
-            <ul
-              className="characters"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {arrItems.map((item, index) => {
-                return (
-                  <Draggable
-                    key={item?.id}
-                    draggableId={item?.id}
-                    index={index}
-                  >
-                    {(provided) => {
-                      <li innerRef={provided.innerRef} provided={provided}>
-                        <p>{item?.content}</p>
-                      </li>;
-                    }}
-                  </Draggable>
-                );
-              })}
-              {provided.placeholder}
-            </ul>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <div className="w-100 h-50 p-5">
+        <DropZone addItemToSection={addItemToSection} listDrop={listDrop} />
+      </div>
+      <div className="d-flex justify-content-center align-items-center m-2">
+        {listBox &&
+          !!listBox.length &&
+          listBox.map((item) => {
+            return <Box id={item.id} name={item.name} />;
+          })}
+      </div>
     </div>
   );
 }
