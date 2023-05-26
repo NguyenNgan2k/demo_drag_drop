@@ -13,14 +13,14 @@ const arr = [
 function App() {
   const [listBox, setListBox] = useState(arr);
   const [listDrop, setListDrop] = useState([]);
-  console.log(listBox, listDrop);
-
+  console.log(listDrop);
   const addItemToSection = (item) => {
     console.log(item);
-    let obj = [...listBox];
-    let find = _.remove(obj, (o) => o.id === item.id);
-    setListBox(obj);
-    setListDrop((o) => [...o, item]);
+    setListBox((list) => _.filter(list, (o) => o.id !== item.id));
+    setListDrop((list) => {
+      if (!_.find(list, (o) => o.id === item.id)) return [...list, item];
+      else return [...list];
+    });
   };
 
   return (
@@ -32,7 +32,7 @@ function App() {
         {listBox &&
           !!listBox.length &&
           listBox.map((item) => {
-            return <Box id={item.id} name={item.name} />;
+            return <Box key={item.id} id={item.id} name={item.name} />;
           })}
       </div>
     </div>

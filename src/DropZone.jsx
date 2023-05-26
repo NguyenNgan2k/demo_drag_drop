@@ -20,7 +20,7 @@ function DropZone(props) {
                 !!listDrop.length &&
                 listDrop.map((item) => {             
                   return (
-                    <Box key={item.id} name={item.name}/>
+                    <Box key={item.id} id={item.id} name={item.name}/>
                   );
                 })}
         </div>

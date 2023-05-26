@@ -22,7 +22,7 @@ function Box(props) {
         width: "150px",
         height: "100px"
     }}>
-        <p>{id}{name}</p>
+        <p>{name}</p>
     </div>
   )
   
